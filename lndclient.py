@@ -101,14 +101,15 @@ class LndClient(abc.ABC):
                 chan.remote_min_htlc, chan.remote_max_htlc = htlc_remote
                 chan.local_disabled = disabled_local
                 chan.remote_disabled = disabled_remote
+                chan.remote_alias = self.getnodeinfo(chan.remote_node_id)["node"]["alias"]
             except:
                 chan.local_base_fee, chan.local_fee_rate = None, None
                 chan.remote_base_fee, chan.remote_fee_rate = None, None
                 chan.local_min_htlc, chan.local_max_htlc = None, None
                 chan.remote_min_htlc, chan.remote_max_htlc = None, None
                 chan.local_disabled, chan.remote_disabled = None, None
+                chan.remote_alias = ''
             chan.local_alias = self.local_alias
-            chan.remote_alias = self.getnodeinfo(chan.remote_node_id)["node"]["alias"]
             chan.last_forward = 0
             chan.local_fees_msat = 0
             chan.remote_fees = 0
